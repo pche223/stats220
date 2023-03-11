@@ -7,5 +7,5 @@ This report was created by my first project in **STATS 220**, which will show wh
 ## Missions
 ### Project 1
 1. Make a meme and a animated gif by R.
-2. Show it with a markdown file.
+2. Show it with a markdown file. You can check it in the file called [Index.Rmd](https://pche223.github.io/stats220/)
 3. Writing the project report.
