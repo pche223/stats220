@@ -6,4 +6,6 @@ This report was created by my first project in **STATS 220**, which will show wh
 - :book: Bachelor of Science *(Data Science)*
 ## Missions
 ### Project 1
-Make a meme and a animated gif by R.
+1. Make a meme and a animated gif by R.
+2. Show it with a markdown file.
+3. Writing the project report.
