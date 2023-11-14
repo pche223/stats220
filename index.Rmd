@@ -1,0 +1,132 @@
+---
+title: "Project 2"
+subtitle: "STATS 220 Semester One 2023"
+author: "Peng-Chong Chen"
+date: "2023-03-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+## Introduction
+
+The topic I decided to focus on in my report is the habits and preferences that people have when learning math.
+
+For example:
+
+1. When do people prefer to start learning math?
+
+2. Which electronic devices do people prefer to use to learn math?
+
+3. Whether the number of hours per week spent studying math is related to listening to music while studying math (Do people who listen to music while studying math study longer hours per week?).
+
+### Google Form Guideline
+
+I followed the Google Form Guidelines for designing the Google Form.
+
+1. Communicate your purpose
+
+In my form description, it's clear what the data is being collected for, what the data will be used for, and it also explains that the form will be anonymous. To protect the privacy of the person filling out my form, I did not ask the personal questions, such as the age of the person.
+
+2. Only ask for data you actually need
+
+All the questions revolved around my focus -- Learning Mathematics, and there was nothing irrelevant to my topic.
+
+3. Consider your respondents
+
+My form questions do not contain any sexist, racial discrimination and other uncomfortable content. The questions are not critical and people who fill out the form will not feel uncomfortable.
+
+4. Use validation rules
+
+By setting up validation for form questions, I can ensure the data availability.
+ 
+
+Questions with check boxes (fixed options) indicates that there may be more than one answer, and if the person who filling out the form selects both answers, Google Forms records them as two variables. In a “tidy” data, each row should have a unique observation and each column should record a unique variable.
+
+
+You can find Google Form [here](https://forms.gle/CLoFpvc5Fw46jgLX6) or you can copy the link and paste it in the browser https://forms.gle/CLoFpvc5Fw46jgLX6.
+
+You can finde the CSV File [here](https://docs.google.com/spreadsheets/d/e/2PACX-1vSf5wYPWh4SlPYbBrpRICq_eqbDNyK0GhWM8LZuteH6dfibIzFaYfuJM62EcPRfhc2yLb-6RPWV1phh/pub?output=csv) or you can copy the link and paste it in the browser https://docs.google.com/spreadsheets/d/e/2PACX-1vSf5wYPWh4SlPYbBrpRICq_eqbDNyK0GhWM8LZuteH6dfibIzFaYfuJM62EcPRfhc2yLb-6RPWV1phh/pub?output=csv
+
+## Analytics
+
+```{r}
+
+csv_file <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vSf5wYPWh4SlPYbBrpRICq_eqbDNyK0GhWM8LZuteH6dfibIzFaYfuJM62EcPRfhc2yLb-6RPWV1phh/pub?output=csv"
+
+# Read the csv file and rename variables in the data frame
+learning_data <- read_csv(csv_file) %>%
+  rename(Time_start = 2,
+         Time_long = 3,
+         Study_place = 4,
+         Music = 5,
+         Study_plan = 6,
+         Problem_solve = 7,
+         Study_devices = 8,
+         Review = 9)
+# Select variables from the data frame
+learning_data %>%
+  select(Time_start,
+         Time_long,
+         Study_place) %>%
+  print()
+# Make a bar chart using the variable Time_start
+learning_data %>%
+  ggplot() +
+  geom_bar(aes(x = Time_start),
+           fill = "#df9fbf")
+# Make a bar chart using the y-axis for the Study_devices
+learning_data %>%
+  ggplot() + 
+  geom_bar(aes(y = Study_devices),
+            fill = "#ff9999")
+# Make a bar chart using the variable Time_long, add helpful labels and fill the colour of each bar using the Music
+learning_data %>%
+  ggplot() +
+  geom_bar(aes(x = Time_long, fill = Music)) +
+  labs(title = "Average number of hours per week spent studying math Analytics",
+       caption = "Source: Learning Mathematics",
+       x = "Time (hours per week)",
+       y = "Number of people")
+
+# Find some data summaries
+learning_data$Time_long %>% min() # Minimum number of hours per week to study maths
+learning_data$Time_long %>% max() # Maximum number of hours per week to study maths
+learning_data$Time_long %>% sum()
+nrow(learning_data) # Number of rows in the data
+mean(learning_data$Time_long, na.rm = T) %>% round(1) # Average number of hours per week to study maths
+range(learning_data$Time_start) # The earliest and latest time to start studying maths every day
+```
+There are `r nrow(learning_data)` response of my survey.
+
+The average time spent studying maths per week is `r mean(learning_data$Time_long, na.rm = T) %>% round(1)` hours.
+
+The earliest time to start studying maths every day is `r learning_data$Time_start %>% min()` o'clock.
+
+The latest time to start studying maths every day is `r learning_data$Time_start %>% max()` o'clock.
+
+## Learning reflection
+
+From Module 2, I learned how to create a Google Form to collect data, create the form into a csv file, and generate dynamic analysis. Dynamic analysis can be updated and modified at any time as required, saving the time of repeatedly making static reports and completing the production and release of reports more efficiently. 
+
+When I was creating Google Form, there are two questions that will generate numeric data using a short answer question, I set up the range of numbers, so I can get the data more effective. 
+I also made innovations in presenting data. I changed the colors in the bar chart and extracted key numbers in my form, such as maximum value, minimum value and average value. 
+
+About the future, I want to learn how to use more graphics (not only the bar chart), to better display the data, which can let my graphics display in a more clear and beautiful way. Also, as discussed earlier, I want to learn how to make the categorical data generated by questions with check boxes (fixed options) as a "tidy" data.
+
+```{css}
+h2 {
+  color: #004d4d;
+  font-family: serif;
+}
+h3 {
+  color: #006666;
+  font-family: serif;
+}
+body {
+  background: linear-gradient(111.5deg, rgb(228, 247, 255) 21.9%, rgb(255, 216, 194) 92.2%);
+}
+```
